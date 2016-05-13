@@ -7,3 +7,62 @@
    require './ThinkPHP/ThinkPHP.php';
  ?>
  =========================================================================================
+ 第二课代码 
+http://127.0.0.1/index.php?m=Index&a=show
+http://127.0.0.1/index.php?m=Index&a=show&name=tony
+
+M 类文件操作数据 C类文件功能操作模块封装方法 V html文件编写对应的模板
+ IndexAction.class.php 代码
+ <?php
+ //本类由系统自动生成，仅供测试用途
+ class IndexAction extends Action{
+   public function index(){
+     echo "Hello World!!";
+   }
+   public function show(){
+     //echo "访问了Index模块下的show方法";
+     //echo "欢迎你".$_GET['name'];	//index.php?m=Index&a=show&name=tony
+     //thinkphp/index.php/Index/show?name=Tim
+     //thinkphp/index.php/Index/show/name/Tim
+     echo "欢迎你".$_GET['name'].'你的年龄是'.$_GET['age'];
+     //thinkphp/index.php/Index/show/name/Tony/age/18
+     //改成横线连接模式Home/Conf/config.php
+     //thinkphp/index.php/Index-show-name-Tony-age-18
+     //普通模式
+     //thinkphp/index.php/?m=Index&a=show&name=Tome&age=18
+     //REWRITE模式 不要index.php 处于安全和搜索SEO考虑
+     //如果想要开启REWRITE模式服务器必须支持REWRITE模式 Apache服务器配置文件搜索rewrite
+     //thinkphp/Index/index .htaccess重写规则
+     //兼容模式 服务器不支持PATHINFO方式 类似普通模式带问号
+     //thinkphp/index.php?s=Index/index
+     //thinkphp/?s=Index/index 开启了WEB服务器重写模式可以去掉index.php文件
+   }
+ }
+ ?>
+ config.php 配置项
+ <?php
+ return array(
+   //'配置项'=>'配置值'
+   'URL_PATHINFO_DEPR'=>'-',//修改URL的分隔符
+   
+ );
+ ?>
+ index.php 入口文件
+ <?php
+   //1.确定应用名称 Home
+   define('APP_NAME','Home');
+   //2.确定应用路径
+   define('APP_PATH','./Home/');
+   //3.开启调试模式 默认为false
+   define('APP_DEBUG',true);
+   //4.应用核心文件
+   require './ThinkPHP/ThinkPHP.php';
+ ?>
+ .htaccess重写文件
+ <IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+ </IfModule>
+  =========================================================================================

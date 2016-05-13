@@ -159,3 +159,126 @@ IndexAction.class.php
  )
  ?>
  =========================================================================================
+ 第四课大纲
+
+#
+ # ThinkPHP 3.1.2 输出和模型使用
+ #
+ 讲师：赵桐正
+ 微博：http://weibo.com/zhaotongzheng
+ 
+本节课大纲：
+
+一、ThinkPHP 3 的输出      （重点）
+  a、通过 echo 等PHP原生的输出方式在页面中输出
+  b、通过display方法输出
+  想分配变量可以使用assign方法
+  c、修改左右定界符
+  休要修改配置文件中的配置项
+  'TMPL_L_DELIM'=>'<{', //修改左定界符
+  'TMPL_R_DELIM'=>'}>', //修改右定界符
+ 
+二、ThinkPHP 3 的模型使用  （重点）
+  需要在方法中通过new Model（表名）的形式操作数据库
+  $m=new Model('User');
+  $arr=$m->select(); 
+  'DB_TYPE'=>'mysql',   //设置数据库类型
+  'DB_HOST'=>'localhost',//设置主机
+  'DB_NAME'=>'thinkphp',//设置数据库名
+  'DB_USER'=>'root',    //设置用户名
+  'DB_PWD'=>'',        //设置密码
+  'DB_PORT'=>'3306',   //设置端口号
+  'DB_PREFIX'=>'tp_',  //设置表前缀
+  也可以使用DSN方法进行配置
+  'DB_DSN'=>'mysql://root:@localhost:3306/thinkphp',//使用DSN方式配置数据库信息	???
+  如果两种方式同时存在，以DSN方式为优先
+  还有一种简单实用模型的方式
+  M() 等效为 new Model();
+  $m=M('User');
+ $arr=$m->select();
+ 
+ 使用模型的实例可以对数据进行操作，操作的工作一般就是对数据库进行 增删改查 CURD
+  增 -C Create $m->add()
+  删 -D Delete $m->delete()
+  改 -U Update $m->save()
+  查 -R Read   $m->select()
+
+ 
+三、补充                   （了解）
+  a、模板可以遍历数组
+  <volist name='data' id='vo'>
+  <{$vo.id}>----<{$vo.username}>-----<{$vo.sex}><br/>
+  </volist>
+  b、我们可以开启调试功能中的page_trace
+  1.开启调试功能
+  //3.开启调试模式
+  define('APP_DEBUG',true);
+  2.我们需要设置配置文件，开启页面trace
+  'SHOW_PAGE_TRACE'=>true,//开启页面Trace
+ 
+第四课配置项
+
+'URL_PATHINFO_DEPR'=>'-',//修改URL的分隔符
+ 'TMPL_L_DELIM'=>'<{', //修改左定界符
+ 'TMPL_R_DELIM'=>'}>', //修改右定界符
+ 'DB_TYPE'=>'mysql',   //设置数据库类型
+ 'DB_HOST'=>'localhost',//设置主机
+ 'DB_NAME'=>'thinkphp',//设置数据库名
+ 'DB_USER'=>'root',    //设置用户名
+ 'DB_PWD'=>'',        //设置密码
+ 'DB_PORT'=>'3306',   //设置端口号
+ 'DB_PREFIX'=>'tp_',  //设置表前缀
+ 'DB_DSN'=>'mysql://root:@localhost:3306/thinkphp',//使用DSN方式配置数据库信息
+ 'SHOW_PAGE_TRACE'=>true,//开启页面Trace	???
+ 
+第四课代码
+
+index.html
+ <html>
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <title>Index</title>
+   </head>
+   <body>
+     <volist name='data' id='vo'> //name是数组标识 vo代表数组
+        <{$vo.id}>----<{$vo.username}>-----<{$vo.sex}><br/>
+     </volist>
+   </body>
+ </html>
+ IndexAction.class.php
+ <?php
+ //本类由系统自动生成，仅供测试用途
+ class IndexAction extends Action{
+   public function index(){
+     //$m=new Model('User');
+     $m=M('User');
+     $arr=$m->select();
+     //var_dump($arr);
+     //$name='赵子龙';
+     $this->assign('data',$arr);
+     $this->display();
+   }
+   public function show(){
+     $this->display();
+   }
+ }
+ ?>
+ config.php 传统方式和DSN方式同时存在 DSN生效
+ <?php
+ return array(
+   //'配置项'=>'配置值'
+   'URL_PATHINFO_DEPR'=>'/',//修改URL的分隔符
+   'TMPL_L_DELIM'=>'<{', //修改左定界符
+   'TMPL_R_DELIM'=>'}>', //修改右定界符
+   //'DB_TYPE'=>'mysql',   //修改数据库类型
+   //'DB_HOST'=>'localhost',//修改主机名
+   //'DB_NAME'=>'thinkphp',//修改数据库名
+   //'DB_USER'=>'root',    //修改用户名
+   //'DB_PWD'=>'',         //修改密码
+   //'DB_ROOT'=>'3306',     //修改端口号
+   'DB_PREFIX'=>'tp_',   //设置标签缀
+   'DB_DSN'=>'mysql://root:@localhost:3306/thinkphp',//使用DSN方式配置数据库信息
+   'SHOW_PAGE_TRACE'=>'true',
+ );
+ ?>
+=========================================================================================

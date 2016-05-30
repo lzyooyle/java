@@ -1,0 +1,25 @@
+用户表joys_user
+=============================================================
+登录名 username
+密码   password
+昵称   name
+邮箱   email
+注册时间reg_date
+最后访问时间 last_login_date
+是否激活active
+参数   params
+CREATE TABLE `joys_user`(
+`id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`username` VARCHAR(150) NOT NULL,
+`password` VARCHAR(100) NOT NULL,
+`name` VARCHAR(255) NOT NULL,
+`email` VARCHAR(100) NOT NULL,
+`reg_date` DATETIME NOT NULL,
+`last_login_date` DATETIME NOT NULL,
+`active` TINYINT(1) NOT NULL,
+`params` TEXT NOT NULL,
+INDEX(`name`),
+UNIQUE(`username`),
+UNIQUE(`email`)
+)ENGINE = MYISAM;
+=============================================================

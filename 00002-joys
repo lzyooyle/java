@@ -1,3 +1,20 @@
+config.html Admin/Tpl/default/Config 网站配置模板文件
+=============================================================
+<form action='__URL__/save' method='post'>
+网站名称：<input type='text' name='sitename' value='{$Think.config.sitename}'><br />
+网站关键词：<input type='text' name='metakeys' value='{$Think.config.metakeys}'><br />
+网站简介：<input type='text' name='metadesc' value='{$Think.config.metadesc}'><br />
+分页数据显示长度：<input type='text' name='pagesize' value='{$Think.config.pagesize}'><br />
+网站联系邮箱：<input type='text' name='email' value='{$Think.config.email}'><br />
+联系人：<input type='text' name='contact' value='{$Think.config.contact}'><br />
+公司名称：<input type='text' name='company' value='{$Think.config.company}'><br />
+联系电话：<input type='text' name='phone' value='{$Think.config.phone}'><br />
+传真：<input type='text' name='fax' value='{$Think.config.fax }'><br />
+地址：<input type='text' name='fax' value='{$Think.config.address  }'><br />
+网站关闭：否<input type='radio' name='offline' value='0' <eq name='Think.config.offline' value='0'> checked='checked'</eq>  
+/>是<input type='radio' name='offline' value='1' <eq name='Think.config.offline' value='1'> checked='checked'</eq> /><br />
+网站关闭理由：<textarea name='offlinemessage' rows='5' cols='50'>{$Think.config.offlinemessage}</textarea>
+</form>
 =============================================================
 单字母函数D、F、S、C、L、A、I 他们都在ThinkPHP核心的ThinkPHP/Mode/Api/functions.php这个文件中定义.
 下面我分别说明一下他们的功能:

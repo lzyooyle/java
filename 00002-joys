@@ -1,3 +1,48 @@
+=============================================================
+ConfigAction.class.php 配置控制器文件 Admin/Lib/Action
+=============================================================
+<?php 
+class ConfigAction extends CommonAction{
+ function config(){
+  $this->display();
+ }
+ function save(){
+  $data = $_POST;
+  $file = $data['file'];
+  unset($data['file']);
+  if($file == 'siteconfig.inc.php'){
+    if($data['sitename'] == '') $data['sitename']='网站名称';
+    if($data['siteurl'] == '') $data['siteurl']='网站网址';
+    if($data['metakeys'] == '') $data['sitekeys']='关键词';
+    if($data['metadesc'] == '') $data['metadesc']='描述';
+    if($data['pagesize'] == '') $data['pagesize']='15';
+    if($data['email'] == '') $data['email']='邮箱';
+    if($data['contact'] == '') $data['contact']='作者';
+    if($data['company'] == '') $data['company']='公司名称';
+    if($data['phone'] == '') $data['phone']='电话';
+    if($data['address'] == '') $data['address']='地址';
+    if($data['offline'] == '') $data['offline']=0;
+    if($data['offlinemessage'] == '') $data['offlinemessage']= '本站正在维护中，暂不能访问';
+  }
+  $content = "<?php \r\n//网站配置文件\r\n //if(!defined('THINK_PATH')) exit();\r\nreturn array(\r\n";
+  //获取数组
+  foreach($data as $key => $value){
+    $key = strtoupper($key);
+    if(is_numeric($value))
+      $content .= "\t'$key'=>$value,\r\n";
+    else
+      $content .= "\t'$key'=>'$value',\r\n";
+    C($key,$value);
+  }
+  $content .=");\r\n?>";
+  $r = @chmod($file,0777);
+  $hand = file_put_contents($file,$content);
+  if(!$hand) $this->error($file.'配置文件写入失败！');
+  $this->success('配置文件保存成功！'); 
+ }
+}
+?>
+=============================================================
 config.html Admin/Tpl/default/Config 网站配置模板文件
 =============================================================
 <form action='__URL__/save' method='post'>
@@ -14,6 +59,7 @@ config.html Admin/Tpl/default/Config 网站配置模板文件
 网站关闭：否<input type='radio' name='offline' value='0' <eq name='Think.config.offline' value='0'> checked='checked'</eq>  
 />是<input type='radio' name='offline' value='1' <eq name='Think.config.offline' value='1'> checked='checked'</eq> /><br />
 网站关闭理由：<textarea name='offlinemessage' rows='5' cols='50'>{$Think.config.offlinemessage}</textarea>
+<input type="hidden" name="file" value="siteconfig.inc.php" />
 </form>
 =============================================================
 单字母函数D、F、S、C、L、A、I 他们都在ThinkPHP核心的ThinkPHP/Mode/Api/functions.php这个文件中定义.

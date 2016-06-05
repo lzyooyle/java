@@ -60,6 +60,7 @@ config.html Admin/Tpl/default/Config 网站配置模板文件
 />是<input type='radio' name='offline' value='1' <eq name='Think.config.offline' value='1'> checked='checked'</eq> /><br />
 网站关闭理由：<textarea name='offlinemessage' rows='5' cols='50'>{$Think.config.offlinemessage}</textarea>
 <input type="hidden" name="file" value="siteconfig.inc.php" />
+<input type="submit" value="保存" />
 </form>
 =============================================================
 单字母函数D、F、S、C、L、A、I 他们都在ThinkPHP核心的ThinkPHP/Mode/Api/functions.php这个文件中定义.

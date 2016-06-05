@@ -1,4 +1,19 @@
 =============================================================
+server.html 服务器设置文件 Admin/Tpl/Config
+=============================================================
+<form action='__URL__/save' method='post'>
+数据库类型：<input type='text' name='db_type' value='{$Think.config.db_type}'><br />
+数据库服务器地址：<input type='text' name='db_host' value='{$Think.config.db_host}'><br />
+数据库名称：<input type='text' name='db_name' value='{$Think.config.db_name}'><br />
+数据库用户名：<input type='text' name='db_user' value='{$Think.config.db_user}'><br />
+数据库密码：<input type='text' name='db_pwd' value='{$Think.config.db_pwd}'><br />
+数据库表前缀：<input type='text' name='db_prefix' value='{$Think.config.db_prefix}'><br />
+数据库字符集：<input type='text' name='db_charset' value='{$Think.config.db_charset}'><br />
+<input type='hidden' name='file' value='config.inc.php'>
+<input type='submit' value='保存'>
+<input type='button' onclick='history.go(-1);' value='取消'>
+</form>
+=============================================================
 ConfigAction.class.php 配置控制器文件 Admin/Lib/Action
 =============================================================
 <?php 
